@@ -1,7 +1,10 @@
-from flask import Flask, url_for, abort, redirect
+from flask import Flask, url_for, abort, redirect, render_template
+from model.data import get_users
 
 app = Flask(__name__)
 
+
+# app.debug = True
 
 @app.route('/')
 @app.route('/accueil')
@@ -59,4 +62,21 @@ def login_default():
 
 
 # Les templates --> https://www.youtube.com/watch?v=pjqd9FNnfTo&list=PLPoGXNI6sXm6D0TKBC0dxp2f_LYfruoof&index=3
+@app.route('/users')
+def show_users():
+    users = get_users()
+    app.logger.debug(users)
+    # return str(users)
+    return render_template('users.html', users=users, title='Liste des utilisateurs')                    # Avec moteur de template jinja
 
+# Héritage de template
+@app.route('/heritage')
+def heritage():
+    users = get_users()
+    return render_template('heritage.html', users=users, title='Liste des utilisateurs')
+
+
+"""
+if __name__ == '__main__':
+    app.run()
+"""

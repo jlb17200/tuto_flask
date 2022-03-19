@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <!-- <title>Liste des utilisateurs</title> -->
+    <title> {{ title if title else 'Pas de titre'}} </title>
+</head>
+<body>
+    <h1>Liste des {{ users|length }} users</h1>
+    <ol>
+        {% for user in users %}
+        <!-- <li>{{  user  }}<br><br></li> -->
+        <!-- <li>{{ user.first_name }} {{ user.last_name }} {{ user.email }}<br><br></li> -->
+        <li>{{ user.first_name|title }} {{ user.last_name|upper }} {{ user.email }}<br><br></li>
+
+        {% endfor %}
+
+    </ol>
+
+</body>
+</html>
