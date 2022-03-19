@@ -1,5 +1,5 @@
 # tuto_flask
 I begin to use Flask. This project is a multiple of tries.
 If you have advices to give, i will take it.
-I especially would like to know
+I especially would like to know how make fastly the frpny end. Bootstrap ?
 Thank you
