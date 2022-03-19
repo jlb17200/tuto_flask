@@ -1,16 +1,62 @@
-# This is a sample Python script.
+from flask import Flask, url_for, abort, redirect
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+app = Flask(__name__)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@app.route('/')
+@app.route('/accueil')
+def accueil():
+    return "<p>Page d accueil</p>"
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+# Variable Rules <variable_name> --> http://127.0.0.1:5000/profil/jl/20
+@app.route('/profil/<string:username>/<int:age>')
+def profil(username, age):
+    return f"Bonjour {username} vous avez {age} ans"
+
+
+# Génération des urld avec url_for()
+@app.route('/contact')
+def contact():
+    return 'page de contact <a href="/accueil">Retour à accueil</a>'
+
+
+@app.route('/contact2')
+def contact2():
+    return 'page de contact <a href="' + url_for("accueil") + '">Retour à accueil</a>'
+
+
+@app.route("/contact3")
+def contact3():
+    return """<a href="%s">Retour à la page d'accueil</a>""" % \
+           url_for('accueil')
+
+
+# Fichier static --> Dans Flask, il est possible de stocker des fichiers dans un répertoire static, situé dans le
+# même répertoire que le fichier Python définissant l’application.
+@app.route("/page")
+def page():
+    return 'Hello <img src="' + url_for('static', filename='logo_flask.png') + '" alt="logo flask">'
+
+
+# Renvoyer code HTTP avec abort()
+@app.route('/protected/<int:code>')
+def protected(code):
+    if code == 1234:
+        return "Autorisé"
+    else:
+        # return "Accès refusé"
+        # abort(404)  # Not found
+        # abort(403)  # Forbidden
+        # abort(401)  # Unauthorized
+        return redirect(url_for('login_default'))
+
+
+# Redirection avec return rediect()
+@app.route('/login_default')
+def login_default():
+    return "Merci de vous identifier"
+
+
+# Les templates --> https://www.youtube.com/watch?v=pjqd9FNnfTo&list=PLPoGXNI6sXm6D0TKBC0dxp2f_LYfruoof&index=3
+
